@@ -1,0 +1,48 @@
+return {
+  -- 1. Copilot 本体 (補完機能)
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          keymap = {
+            accept = "<M-l>", -- Alt + l で補完を確定
+          },
+        },
+      })
+    end,
+  },
+
+  -- 2. Copilot Chat (VS Code風チャット機能)
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "canary", -- 最新機能を使うために必要
+    dependencies = {
+      { "zbirenbaum/copilot.lua" },
+      { "nvim-lua/plenary.nvim" },
+    },
+    opts = {
+      -- 日本語で回答してもらうための設定
+      prompts = {
+        Explain = { prompt = "/COPILOT_EXPLAIN 選択したコードを日本語で解説してください。" },
+        Review = {
+          prompt = "/COPILOT_REVIEW 選択したコードをレビューして日本語で改善案を出してください。",
+        },
+      },
+      window = {
+        layout = "vertical",
+        width = 0.4,
+      },
+    },
+    keys = {
+      -- <Leader>cc でチャット開閉（Leaderキーは標準では \ です）
+      { "<leader>cc", "<cmd>CopilotChatToggle<cr>", desc = "CopilotChat - Toggle" },
+      -- 選択した範囲に質問
+      { "<leader>ce", "<cmd>CopilotChatExplain<cr>", mode = "v", desc = "CopilotChat - Explain" },
+    },
+  },
+}

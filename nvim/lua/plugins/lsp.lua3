@@ -1,0 +1,28 @@
+return {
+  -- LSP 本体の設定
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        vtsls = {},
+        volar = {},
+      },
+    },
+  },
+
+  -- 「No information available」の通知だけを消す
+  {
+    "folke/noice.nvim",
+    opts = {
+      routes = {
+        {
+          filter = {
+            event = "notify",
+            find = "No information available",
+          },
+          opts = { skip = true },
+        },
+      },
+    },
+  },
+}

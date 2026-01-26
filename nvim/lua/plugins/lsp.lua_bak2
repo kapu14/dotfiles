@@ -1,0 +1,31 @@
+return {
+  -- LSP 本体の設定
+  {
+    "neovim/nvim-lspconfig",
+    -- LazyVimではこれを event = "LazyFile" などで読み込みますが、
+    -- 強制的に読み込むために一度明示します
+    lazy = false,
+    opts = {
+      servers = {
+        vtsls = {},
+        volar = {},
+      },
+    },
+  },
+
+  -- 通知を消す設定（No information available対策）
+  {
+    "folke/noice.nvim",
+    opts = {
+      routes = {
+        {
+          filter = {
+            event = "notify",
+            find = "No information available",
+          },
+          opts = { skip = true },
+        },
+      },
+    },
+  },
+}

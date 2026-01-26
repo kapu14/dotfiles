@@ -1,0 +1,26 @@
+return {
+  -- LSPの設定
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      "mason-org/mason.nvim",
+      "mason-org/mason-lspconfig.nvim",
+    },
+    config = function()
+      require("mason").setup()
+      require("mason-lspconfig").setup({
+        ensure_installed = { "lua_ls", "vtsls" },
+      })
+      local lspconfig = require("lspconfig")
+      lspconfig.lua_ls.setup({})
+      lspconfig.vtsls.setup({}) -- JavaScript/TypeScript用
+    end,
+  },
+  -- Snacksの設定
+  {
+    "folke/snacks.nvim",
+    opts = {
+      picker = { enabled = true },
+    },
+  },
+}

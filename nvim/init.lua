@@ -1,18 +1,28 @@
--- bootstrap lazy.nvim, LazyVim and your plugins
+-- bootstrap lazy.nvim
 require("config.lazy")
--- 有効化
+
+-- オプション設定（実行部分）
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = true
+vim.opt.timeoutlen = 500
+vim.opt.ttimeoutlen = 10
+vim.opt.clipboard = "unnamedplus"
 
--- 色のカスタマイズ（例：背景色を少し変える）
+-- 色の設定
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#2e3440" })
 vim.api.nvim_set_hl(0, "CursorColumn", { bg = "#2e3440" })
-
--- init.lua
-vim.opt.timeoutlen = 500 -- キーシーケンスの待機時間
-vim.opt.ttimeoutlen = 10 -- キーコード（Escなど）の待機時間を短くして反応を速くする
-
--- クリップボードをOSと同期
-vim.opt.clipboard = "unnamedplus"
--- インレイヒントの色を調整する例（灰色にするなど）
 vim.api.nvim_set_hl(0, "LspInlayHint", { fg = "#5c6370", italic = true })
+
+-- キーマップ
+vim.keymap.set("t", "<Esc><Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
+vim.keymap.set("n", "<C-h>", "<C-w>h")
+vim.keymap.set("n", "<C-j>", "<C-w>j")
+vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<C-l>", "<C-w>l")
+
+-- 「Space + d」で現在のファイルのエラー一覧を開く
+vim.keymap.set("n", "<leader>d", function()
+  Snacks.picker.diagnostics({ filter = { buf = 0 } })
+end, { desc = "Document Diagnostics" })
+
+-- ※ return { ... } はここから削除します
